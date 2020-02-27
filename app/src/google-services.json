@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "435077120949",
+    "firebase_url": "https://bestphotocollections-aac76.firebaseio.com",
+    "project_id": "bestphotocollections-aac76",
+    "storage_bucket": "bestphotocollections-aac76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:435077120949:android:6bd7d5b9abe47f0c44cffc",
+        "android_client_info": {
+          "package_name": "com.example.bestphotocollections"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "435077120949-6s3ro5ttld4ii97tmtc4a397gmfq6o6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ7eiEYOW3Q_ui2zrzemvHpFT5lnfP0pU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "435077120949-6s3ro5ttld4ii97tmtc4a397gmfq6o6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

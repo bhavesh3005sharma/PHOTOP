@@ -1,4 +1,4 @@
-package com.example.bestphotocollections;
+package com.example.bestphotocollections.AuthenticaionActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,11 +11,13 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.example.bestphotocollections.MainActivity;
+import com.example.bestphotocollections.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class LOGIN_ACTIVITY extends AppCompatActivity {
 
@@ -42,7 +44,7 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
         textViewSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),SIGNUP_ACTIVITY.class);
+                Intent intent = new Intent(getApplicationContext(), SIGNUP_ACTIVITY.class);
                 startActivity(intent);
             }
         });
@@ -74,7 +76,7 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
         textViewResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LOGIN_ACTIVITY.this,RESET_PASSWORD.class);
+                Intent intent = new Intent(LOGIN_ACTIVITY.this, RESET_PASSWORD.class);
                 startActivity(intent);
             }
         });
@@ -90,7 +92,7 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
                 Progressbar.setVisibility(View.GONE);
                 if(task.isSuccessful()){
                     if(mAuth.getCurrentUser().isEmailVerified()){
-                        Intent intent = new Intent(getApplicationContext(),MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
                     }
                     else{

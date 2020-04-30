@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.bestphotocollections">
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,26 +16,35 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AddPhoto_Activity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".AuthenticaionActivities.RESET_PASSWORD"
-        android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-        <activity android:name=".MainActivity"
-            android:noHistory="true"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+        <activity android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:configChanges="keyboard|orientation|screenSize"/>
+        <activity android:name=".MessagingActivities.ChatActivity.ChatActivity"
+            android:configChanges="keyboard|orientation|screenSize"/>
+        <activity
+            android:name=".showSelectedImg" />
+        <activity
+            android:name=".AddPhoto_Activity"
+            android:configChanges="keyboard|orientation|screenSize" />
+        <activity
+            android:name=".AuthenticaionActivities.RESET_PASSWORD"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MainActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AuthenticaionActivities.SIGNUP_ACTIVITY"
             android:noHistory="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
-            android:noHistory="true">
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"
-                android:theme="@style/AppTheme.NoActionBar"/>
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:theme="@style/AppTheme.NoActionBar" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

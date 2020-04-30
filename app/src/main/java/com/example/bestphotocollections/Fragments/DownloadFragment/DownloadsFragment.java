@@ -1,4 +1,4 @@
-package com.example.bestphotocollections.Fragments;
+package com.example.bestphotocollections.Fragments.DownloadFragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +11,13 @@ import androidx.fragment.app.Fragment;
 
 import com.example.bestphotocollections.R;
 
-public class DownloadsFragment extends Fragment {
+public class DownloadsFragment extends Fragment implements Contract.view {
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.download_fragment,container,false);
+        View view = inflater.inflate(R.layout.download_fragment,container,false);
+        getActivity().setTitle("Your Complete Collections");
+        return view;
     }
 }

@@ -87,6 +87,7 @@ public class SIGNUP_ACTIVITY extends AppCompatActivity {
                                     Progressbar.setVisibility(View.GONE);
                                     if (it.isSuccessful()) {
                                         Toast.makeText(SIGNUP_ACTIVITY.this , "Registered Successfully Verification Email Sent Please Verify First", Toast.LENGTH_SHORT).show();
+                                        mAuth.signOut();
                                     } else {
                                         Toast.makeText(SIGNUP_ACTIVITY.this , it.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     }

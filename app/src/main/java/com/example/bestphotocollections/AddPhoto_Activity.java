@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.bestphotocollections.Model.Upload;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -28,7 +30,7 @@ import com.google.firebase.storage.StorageTask;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
-public class AddPhoto_Activity extends AppCompatActivity {
+public class AddPhoto_Activity extends AppCompatActivity implements View.OnClickListener {
 
     private static final int PICK_IMAGE_REQUEST =1;
 
@@ -37,7 +39,6 @@ public class AddPhoto_Activity extends AppCompatActivity {
     private ImageView imageView;
     private ProgressBar progressBar;
     private Uri mImageUri;
-
     private StorageTask mUploadTask;
     private StorageReference mStorageRef;
     private DatabaseReference mDatabaseRef;
@@ -45,6 +46,7 @@ public class AddPhoto_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_photo_);
+        setTitle("Add Photo");
 
         editTextTitle = findViewById(R.id.text_title);
         editTextMetabata = findViewById(R.id.text_metadata);
@@ -56,23 +58,8 @@ public class AddPhoto_Activity extends AppCompatActivity {
         mStorageRef = FirebaseStorage.getInstance().getReference("uploads/"+ FirebaseAuth.getInstance().getUid());
         mDatabaseRef = FirebaseDatabase.getInstance().getReference("uploads/"+ FirebaseAuth.getInstance().getUid());
 
-        btnChoose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FileChooser();
-            }
-        });
-
-        btnUpload.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                if (mUploadTask != null && mUploadTask.isInProgress()) {
-                    Toast.makeText(AddPhoto_Activity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
-                } else
-                    uploadImage();
-            }
-        });
+        btnChoose.setOnClickListener(this);
+        btnUpload.setOnClickListener(this);
     }
 
     private void FileChooser() {
@@ -89,8 +76,8 @@ public class AddPhoto_Activity extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK
                 && data != null && data.getData() != null) {
             mImageUri = data.getData();
-
-            Picasso.with(this).load(mImageUri).into(imageView);
+            Picasso.get().load(mImageUri).into(imageView);
+            Log.d("UploadActUri",""+mImageUri);
         }
     }
 
@@ -101,7 +88,9 @@ public class AddPhoto_Activity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-        if (mImageUri != null) {
+        if(editTextTitle.getText().toString().trim().equals(""))
+            Toast.makeText(AddPhoto_Activity.this, "Title is mandatory", Toast.LENGTH_SHORT).show();
+        else if (mImageUri != null) {
             StorageReference fileReference = mStorageRef.child(System.currentTimeMillis()
                     + "." + getFileExtension(mImageUri));
 
@@ -116,13 +105,20 @@ public class AddPhoto_Activity extends AppCompatActivity {
                                     progressBar.setProgress(0);
                                 }
                             }, 500);
-
                             Toast.makeText(AddPhoto_Activity.this, "Upload successful", Toast.LENGTH_LONG).show();
-                            Upload upload = new Upload(editTextTitle.getText().toString().trim(),editTextMetabata.getText().toString().trim(),
-                                    taskSnapshot.getUploadSessionUri().toString());
-                            String uploadId = mDatabaseRef.push().getKey();
-                            mDatabaseRef.child("item_list"+uploadId).setValue(upload);
-                            mDatabaseRef.child("Name").setValue(FirebaseAuth.getInstance().getUid()+" bhavesh");
+
+                            fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    String url = uri.toString();
+                                    Upload upload = new Upload(editTextMetabata.getText().toString().trim(),
+                                            url,editTextTitle.getText().toString().trim());
+                                    String uploadId = mDatabaseRef.push().getKey();
+
+                                    mDatabaseRef.child("item_list/"+uploadId).setValue(upload);
+                                    mDatabaseRef.child("Name").setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+                                }
+                            });
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -138,7 +134,8 @@ public class AddPhoto_Activity extends AppCompatActivity {
                             progressBar.setProgress((int) progress);
                         }
                     });
-        } else {
+        }
+        else {
             Toast.makeText(this, "No file selected", Toast.LENGTH_SHORT).show();
         }
     }
@@ -149,5 +146,20 @@ public class AddPhoto_Activity extends AppCompatActivity {
 
         Intent intent = new Intent(AddPhoto_Activity.this,MainActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.choose:
+                FileChooser();
+                break;
+            case R.id.upload :
+                if (mUploadTask != null && mUploadTask.isInProgress())
+                    Toast.makeText(AddPhoto_Activity.this, "Upload in progress", Toast.LENGTH_SHORT).show();
+                else
+                    uploadImage();
+                break;
+        }
     }
 }

@@ -1,12 +1,21 @@
-package com.example.bestphotocollections;
+package com.example.bestphotocollections.Model;
 
 public class Upload {
     private  String mtitle;
     private  String mMatadata;
     private  String mUri;
+    private String mKey;
+
+    public String getmKey() {
+        return mKey;
+    }
 
     public Upload() {
         //empty constructor needed
+    }
+
+    public void setmKey(String mKey) {
+        this.mKey = mKey;
     }
 
     public String getMtitle() {
@@ -33,7 +42,7 @@ public class Upload {
         this.mUri = mUri;
     }
 
-    public Upload(String title, String metadata , String imageUrl) {
+    public Upload(String metadata , String imageUrl,String title) {
         if (title.trim().equals("")) {
             mtitle = "NO TITLE";
         }

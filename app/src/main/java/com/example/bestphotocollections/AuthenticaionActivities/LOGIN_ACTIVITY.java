@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.bestphotocollections.MainActivity;
 import com.example.bestphotocollections.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -94,6 +93,7 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
                     if(mAuth.getCurrentUser().isEmailVerified()){
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }
                     else{
                         Toast.makeText(LOGIN_ACTIVITY.this,"User not Verified\n  check Email",Toast.LENGTH_SHORT).show();
@@ -111,6 +111,7 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
         if(mAuth.getCurrentUser()!=null && mAuth.getCurrentUser().isEmailVerified()) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
+            finish();
         }
     }
 

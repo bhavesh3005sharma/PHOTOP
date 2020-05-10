@@ -1,9 +1,7 @@
-package com.example.bestphotocollections.Fragments.HomeFragment;
+package com.example.bestphotocollections.Fragments.HomeSubFragment;
 
-import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
-import android.widget.Switch;
 
 import androidx.annotation.NonNull;
 

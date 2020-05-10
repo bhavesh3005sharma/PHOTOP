@@ -16,13 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:configChanges="keyboard|orientation|screenSize"/>
-        <activity android:name=".MessagingActivities.ChatActivity.ChatActivity"
-            android:configChanges="keyboard|orientation|screenSize"/>
+        <activity android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".showSelectedImg" />
+            android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".MessagingActivities.ChatActivity.ChatActivity"
+            android:configChanges="keyboard|orientation|screenSize" />
+        <activity android:name=".showSelectedImg" />
         <activity
             android:name=".AddPhoto_Activity"
             android:configChanges="keyboard|orientation|screenSize" />
@@ -38,7 +41,7 @@
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
+            android:name=".SplashScreen"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action

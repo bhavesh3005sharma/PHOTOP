@@ -36,7 +36,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         holder.title.setText(itemData.get(position).getMtitle());
-        Picasso.get().load(Uri.parse(itemData.get(position).getmUri())).placeholder(R.drawable.pic).fit().into(holder.imageView);
+        if(itemData.get(position).getmUri()!=null)
+        Picasso.get().load(Uri.parse(itemData.get(position).getmUri())).placeholder(R.color.placeholder_bg).fit().into(holder.imageView);
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

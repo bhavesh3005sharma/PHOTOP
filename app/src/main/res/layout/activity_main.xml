@@ -21,28 +21,8 @@
             android:layout_height="?attr/actionBarSize"
             android:background="#193AEE"
             android:elevation="4dp"
-
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageButton
-                    android:id="@+id/messagingActivity"
-                    android:layout_width="60dp"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="#193AEE"
-                    android:layout_marginRight="20dp"
-                    android:src="@drawable/message_send_icon"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </androidx.appcompat.widget.Toolbar>
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
 
         <FrameLayout

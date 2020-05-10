@@ -10,6 +10,8 @@ public class Contracter {
         void showToast(String message);
 
         void setRecyclerView(ArrayList<ModelMessagingPersons> list);
+
+        void saveToShredPref(ArrayList<ModelMessagingPersons> list);
     }
     interface presenter{
 

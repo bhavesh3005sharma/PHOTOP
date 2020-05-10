@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,10 +33,11 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ItemGroupAdapter extends RecyclerView.Adapter<ItemGroupAdapter.itemGroupViewholder> {
+public class ItemGroupAdapter extends RecyclerView.Adapter<ItemGroupAdapter.itemGroupViewholder> implements Filterable {
 
     private Context context;
     private ArrayList<ItemGroup> datalist;
+    private ArrayList<ItemGroup> ItemGroupList;
     DatabaseReference databaseReference;
     String uidFollower;
     String uidFollowing;
@@ -42,6 +45,7 @@ public class ItemGroupAdapter extends RecyclerView.Adapter<ItemGroupAdapter.item
     public ItemGroupAdapter(Context context, ArrayList<ItemGroup> datalist) {
         this.context = context;
         this.datalist = datalist;
+        this.ItemGroupList = datalist;
     }
 
     @NonNull
@@ -121,6 +125,41 @@ public class ItemGroupAdapter extends RecyclerView.Adapter<ItemGroupAdapter.item
     @Override
     public int getItemCount() {
         return (datalist!= null? datalist.size() : 0);
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                if (charString.isEmpty()) {
+                    datalist = ItemGroupList;
+                } else {
+                    ArrayList<ItemGroup> filteredList = new ArrayList<>();
+                    for (ItemGroup row : ItemGroupList) {
+
+                        // name match condition. this might differ depending on your requirement
+                        // here we are looking for name or phone number match
+                        if (row.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(row);
+                        }
+                    }
+
+                    datalist = filteredList;
+                }
+
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = datalist;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                datalist = (ArrayList<ItemGroup>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class itemGroupViewholder extends RecyclerView.ViewHolder{

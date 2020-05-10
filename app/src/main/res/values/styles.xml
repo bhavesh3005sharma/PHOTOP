@@ -11,4 +11,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
+        @import url(\'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&amp;display=swap');
+    </style>
+
 </resources>

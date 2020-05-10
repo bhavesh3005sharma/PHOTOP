@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -24,6 +27,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -69,16 +74,21 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
     AlertDialog alertDialog;
      Contract.presenter presenter;
     Uri imageUri;
+    SharedPreferences sharedPreferences;
      FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.profile_fragment,container,false);
+
         getActivity().setTitle("Profile");
+        sharedPreferences = getActivity().getSharedPreferences("shared_pref_profile_data",Context.MODE_PRIVATE);
+
         ButterKnife.bind(this,view);
         presenter = new Presenter(ProfileFragment.this);
 
+        loadDataFormSharedPref();
         editTextName.setText(currentUser.getDisplayName());
         textEmail.setText(currentUser.getEmail());
         if(currentUser.getPhotoUrl()!=null)
@@ -229,6 +239,7 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
+
     @Override
     public void setProfileData(long followers, long followings, long total_uploads, String metadata) {
         textFollowers.setText(""+followers);
@@ -240,6 +251,30 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
         }
         else
         editTextBio.setText(metadata);
+
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putLong("followers",followers);
+        editor.putLong("followings",followings);
+        editor.putLong("total_uploads",total_uploads);
+        editor.putString("metadata",metadata);
+        if(currentUser.getPhotoUrl()!=null)
+            editor.putString("uri",currentUser.getPhotoUrl().toString());
+        editor.apply();
+    }
+
+    private void loadDataFormSharedPref() {
+        textFollowers.setText(""+sharedPreferences.getLong("followers",0));
+        textFollowings.setText(""+sharedPreferences.getLong("followings",0));
+        textUploads.setText(""+sharedPreferences.getLong("total_uploads",0));
+        if(sharedPreferences.getString("uri",null)!=null)
+            Picasso.get().load(sharedPreferences.getString("uri",null)).placeholder(R.drawable.ic_profile).into(profileImage);
+        String metadata = sharedPreferences.getString("metadata","null");
+        if(metadata.equals("null")) {
+            metadata = "Add some bio about you. It will help your friends to recognise you.";
+            editTextBio.setHint(metadata);
+        }
+        else
+            editTextBio.setText(metadata);
     }
 
     private Uri getImageUri(Context context, Bitmap inImage) {

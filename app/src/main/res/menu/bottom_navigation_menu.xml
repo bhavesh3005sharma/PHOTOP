@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/connections"
+        android:icon="@drawable/ic_connections"
+        android:title="Connections" />
+
+    <item
+        android:id="@+id/Add_Photo"
+        android:icon="@drawable/ic_add_a_photo"
+        android:title="Upload Photo" />
+
+    <item
+        android:id="@+id/earnings"
+        android:icon="@drawable/ic_money"
+        android:title="Earnings" />
+
+</menu>

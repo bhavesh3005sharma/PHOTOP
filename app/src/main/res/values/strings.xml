@@ -3,4 +3,5 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="shared_pref_message_saved">shared_pref_message_saved</string>
+    <string name="sharedPrefDownloads">shared_pref_downloads_photos</string>
 </resources>

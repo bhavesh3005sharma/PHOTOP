@@ -54,6 +54,7 @@ public class Presenter implements Contract.Presenter {
                         itemData.setMtitle(listsnapshot.child("mtitle").getValue().toString());
                         itemData.setmMatadata(listsnapshot.child("mMatadata").getValue().toString());
                         itemData.setmUri(listsnapshot.child("mUri").getValue().toString());
+                        itemData.setKey(listsnapshot.getKey().toString());
                         list_item.add(itemData);
                     }
                     Collections.reverse(list_item);

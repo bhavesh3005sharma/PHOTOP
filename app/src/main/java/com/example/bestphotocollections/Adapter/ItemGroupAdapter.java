@@ -70,7 +70,7 @@ public class ItemGroupAdapter extends RecyclerView.Adapter<ItemGroupAdapter.item
             Picasso.get().load(datalist.get(position).getUri()).placeholder(R.drawable.ic_profile).into(holder.profileImg);
 
         ArrayList<ItemData> item_list = datalist.get(position).getItem_list();
-        ItemAdapter itemAdapter = new ItemAdapter(context,item_list);
+        ItemAdapter itemAdapter = new ItemAdapter(context,item_list,datalist.get(position).getUid());
         holder.recyclerView.setHasFixedSize(true);
         holder.recyclerView.setLayoutManager(new LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false));
         holder.recyclerView.setAdapter(itemAdapter);

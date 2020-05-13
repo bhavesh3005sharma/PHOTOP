@@ -1,6 +1,7 @@
 package com.example.bestphotocollections.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.bestphotocollections.Model.ModelConnection;
 import com.example.bestphotocollections.R;
+import com.example.bestphotocollections.showSelectedImg;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
@@ -47,6 +49,17 @@ public class AdapterConnections extends RecyclerView.Adapter<AdapterConnections.
         Picasso.get().load(Uri.parse(model.getUri())).placeholder(R.color.placeholder_bg).into(holder.img);
         if(model.getProfileImageUri()!=null)
             Picasso.get().load(Uri.parse(model.getProfileImageUri())).placeholder(R.drawable.ic_profile).into(holder.profileImg);
+
+        holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent =  new Intent(context, showSelectedImg.class);
+                intent.putExtra("uri",list.get(position).getUri());
+                intent.putExtra("title",list.get(position).getTitle());
+                intent.putExtra("metadata",list.get(position).getMetadata());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

@@ -75,7 +75,7 @@
             app:srcCompat="@drawable/gallery_icon" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/img"
             android:layout_width="40dp"
             android:layout_height="40dp"
             app:layout_constraintBottom_toBottomOf="@+id/camera"

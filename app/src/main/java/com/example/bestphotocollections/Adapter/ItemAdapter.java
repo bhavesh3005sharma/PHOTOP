@@ -20,10 +20,12 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder> {
     Context context;
     ArrayList<ItemData> itemData;
+    String uid;
 
-    public ItemAdapter(Context context, ArrayList<ItemData> itemData) {
+    public ItemAdapter(Context context, ArrayList<ItemData> itemData, String uid) {
         this.context = context;
         this.itemData = itemData;
+        this.uid = uid;
     }
 
     @NonNull

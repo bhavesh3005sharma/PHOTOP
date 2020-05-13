@@ -4,6 +4,15 @@ public class ItemData {
     private String mMatadata;
     private String mUri;
     private String mtitle;
+    private String  key;
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 
     public ItemData(){
 

@@ -10,6 +10,8 @@ public class Contract {
          void progressBarVisibility(int visibility);
 
         void setText(String s);
+
+        void notifyAdapter();
     }
     public interface Presenter{
          void getItemGroupList();

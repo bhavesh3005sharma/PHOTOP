@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bestphotocollections.Adapter.UploadFragAdapter;
-import com.example.bestphotocollections.AddPhoto_Activity;
-import com.example.bestphotocollections.R;
+import com.example.bestphotocollections.MainActivity;
 import com.example.bestphotocollections.Model.Upload;
+import com.example.bestphotocollections.R;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -72,9 +72,14 @@ public class MyUploadsFragment extends Fragment implements Contract.view, Upload
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getContext(), AddPhoto_Activity.class));
+                startActivity(new Intent(getContext(), MainActivity.class).putExtra("openUploadPhotoFrag","true"));
             }
         });
+    }
+
+    @Override
+    public void notifyAdapter() {
+        adapter.notifyDataSetChanged();
     }
 
     @Override

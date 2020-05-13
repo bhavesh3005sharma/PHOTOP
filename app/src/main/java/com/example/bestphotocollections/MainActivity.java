@@ -45,9 +45,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+        String check = getIntent().getStringExtra("openUploadPhotoFrag");
+        Bundle bundle = new Bundle();
+        bundle.putString("openUploadPhotoFrag",check);
+
+
         if (savedInstanceState == null) {
+            Fragment fragment = new MainHomeFragment();
+            fragment.setArguments(bundle);
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new MainHomeFragment()).commit();
+                    fragment).commit();
             navigationView.setCheckedItem(R.id.HOME);
         }
     }

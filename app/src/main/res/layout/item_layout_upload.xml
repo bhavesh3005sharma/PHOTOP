@@ -14,15 +14,15 @@
 
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F1EBEB">
+    android:background="#F1EBEB"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/image_uploaded"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:scaleType="centerCrop"
-        android:layout_marginRight="5dp"
-        android:layout_marginLeft="5dp"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -53,6 +53,8 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textSize="15dp"
+        android:layout_margin="10dp"
+        android:textColor="#1F1D1D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"

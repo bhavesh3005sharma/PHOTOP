@@ -9,14 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
-import com.example.bestphotocollections.AddPhoto_Activity;
 import com.example.bestphotocollections.Fragments.ConnectionSubFrag.ConnectionSubFragment;
 import com.example.bestphotocollections.Fragments.HomeSubFragment.HomeSubFragment;
 import com.example.bestphotocollections.MessagingActivities.ChatActivity.ChatActivity;
@@ -42,6 +39,14 @@ public class MainHomeFragment extends Fragment implements BottomNavigationView.O
             loadFragment(new HomeSubFragment());
         }
 
+        String check=null;
+        if (getArguments()!=null)
+         check= getArguments().getString("openUploadPhotoFrag");
+        if(check!=null && check.equals("true")) {
+            loadFragment(new UploadPhotoFragment());
+            navigation.setSelectedItemId(R.id.Add_Photo);
+        }
+
         return  view;
     }
 
@@ -60,7 +65,7 @@ public class MainHomeFragment extends Fragment implements BottomNavigationView.O
                     if (currentUser.getDisplayName().equals(""))
                         Toast.makeText(getContext(), "Please Update Your Profile First.", Toast.LENGTH_SHORT).show();
                     else
-                        startActivity(new Intent(getContext(), AddPhoto_Activity.class));
+                        loadFragment(new UploadPhotoFragment());
                 }
                 return true;
             case R.id.earnings:

@@ -31,11 +31,13 @@ public class Presenter implements com.example.bestphotocollections.Fragments.MyU
 
     @Override
     public void getItemGroupList() {
+        list_item =new ArrayList<>();
+        mainView.setRecyclerView(list_item);
         databaseReference = FirebaseDatabase.getInstance().getReference("uploads/"+ FirebaseAuth.getInstance().getUid()+"/item_list");
         mDBListener = databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-               list_item =new ArrayList<>();
+               list_item.clear();
                 for(DataSnapshot listsnapshot : dataSnapshot.getChildren()){
                     Upload itemData = new Upload();
                     itemData.setMtitle(listsnapshot.child("mtitle").getValue().toString());
@@ -47,7 +49,7 @@ public class Presenter implements com.example.bestphotocollections.Fragments.MyU
                 mainView.progressBarVisibility(View.GONE);
                 if(list_item.isEmpty())
                     mainView.setText("You haven't Uploaded anything yet \n Click here for your first Upload.");
-                mainView.setRecyclerView(list_item);
+                mainView.notifyAdapter();
 
             }
 

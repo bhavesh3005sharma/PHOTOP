@@ -39,11 +39,13 @@ public class RESET_PASSWORD extends AppCompatActivity {
 
                 if (email.isEmpty()) {
                     textEmail.setError("Email is Required.");
+                    textEmail.requestFocus();
                     return;
                 }
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     textEmail.setError("Please Enter The Valid Email.");
+                    textEmail.requestFocus();
                     return;
                 }
 

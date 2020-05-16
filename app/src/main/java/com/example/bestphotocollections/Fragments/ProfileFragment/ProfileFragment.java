@@ -242,21 +242,24 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
 
     @Override
     public void setProfileData(long followers, long followings, long total_uploads, String metadata) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
         textFollowers.setText(""+followers);
         textFollowings.setText(""+followings);
         textUploads.setText(""+total_uploads);
         if(metadata.equals("null")) {
             metadata = "Add some bio about you. It will help your friends to recognise you.";
             editTextBio.setHint(metadata);
+            Log.d("if-setprofileData-hint",metadata);
         }
-        else
-        editTextBio.setText(metadata);
-
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+        else {
+            Log.d("else-setprfleData-text",metadata);
+            editTextBio.setText(metadata);
+            editor.putString("metadata",metadata);
+        }
         editor.putLong("followers",followers);
         editor.putLong("followings",followings);
         editor.putLong("total_uploads",total_uploads);
-        editor.putString("metadata",metadata);
+
         if(currentUser.getPhotoUrl()!=null)
             editor.putString("uri",currentUser.getPhotoUrl().toString());
         editor.apply();
@@ -268,13 +271,16 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
         textUploads.setText(""+sharedPreferences.getLong("total_uploads",0));
         if(sharedPreferences.getString("uri",null)!=null)
             Picasso.get().load(sharedPreferences.getString("uri",null)).placeholder(R.drawable.ic_profile).into(profileImage);
-        String metadata = sharedPreferences.getString("metadata","null");
-        if(metadata.equals("null")) {
+        String metadata = sharedPreferences.getString("metadata",null);
+        if(metadata==null) {
             metadata = "Add some bio about you. It will help your friends to recognise you.";
             editTextBio.setHint(metadata);
+            Log.d("if-hint",metadata);
         }
-        else
+        else {
+            Log.d("else-text",metadata);
             editTextBio.setText(metadata);
+        }
     }
 
     private Uri getImageUri(Context context, Bitmap inImage) {

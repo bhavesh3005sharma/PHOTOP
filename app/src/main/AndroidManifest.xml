@@ -19,6 +19,7 @@
         <activity android:name=".ConformationActivity"></activity>
         <activity
             android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
@@ -30,6 +31,7 @@
         <activity android:name=".showSelectedImg" />
         <activity
             android:name=".AuthenticaionActivities.RESET_PASSWORD"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
@@ -37,7 +39,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AuthenticaionActivities.SIGNUP_ACTIVITY"
-            android:noHistory="true"
+            android:screenOrientation="fullSensor"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SplashScreen"

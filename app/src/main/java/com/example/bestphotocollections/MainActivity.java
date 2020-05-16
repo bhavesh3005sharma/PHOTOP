@@ -92,10 +92,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialoge, int id) {
                                 FirebaseAuth.getInstance().signOut();
-                                SharedPreferences sharedPreferences = getSharedPreferences("shared_pref_profile_data",MODE_PRIVATE);
-                                SharedPreferences.Editor editor =sharedPreferences.edit();
-                                editor.clear();
-                                editor.apply();
+                                SharedPreferences sharedPreferencesProfileData = getSharedPreferences("shared_pref_profile_data",MODE_PRIVATE);
+                                SharedPreferences.Editor editorProfile =sharedPreferencesProfileData.edit();
+                                editorProfile.clear();
+                                editorProfile.apply();
+
+                                SharedPreferences sharedPreferencesDownloads = getSharedPreferences(String.valueOf(R.string.sharedPrefDownloads),MODE_PRIVATE);
+                                SharedPreferences.Editor editorDownloads =sharedPreferencesDownloads.edit();
+                                editorDownloads.clear();
+                                editorDownloads.apply();
+
                                 Intent intent = new Intent(getApplicationContext(), LOGIN_ACTIVITY.class);
                                 startActivity(intent);
                                 finish();

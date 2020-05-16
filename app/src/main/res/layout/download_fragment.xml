@@ -4,14 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Downloads will be saved to your device Storage and will be showed here till you are logged-in
+after Log-out you can't access your downloads from here.\nStill they are stored in your device Storage"
+        android:layout_alignParentStart="true"
+        android:textColor="#E21717"
+        android:layout_alignParentTop="true"
+        android:background="#FFE60C"
+        android:padding="5dp"
+        android:singleLine="false"
+        android:scrollbars="vertical"
+        android:scrollIndicators="start"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewDownloads"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp"
-        android:layout_alignParentBottom="true" />
+        android:layout_below="@id/textView" />
+
+
 </RelativeLayout>

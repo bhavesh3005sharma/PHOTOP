@@ -2,6 +2,7 @@ package com.example.bestphotocollections.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,8 +43,12 @@ public class MainHomeFragment extends Fragment implements BottomNavigationView.O
         String check=null;
         if (getArguments()!=null)
          check= getArguments().getString("openUploadPhotoFrag");
-        if(check!=null && check.equals("true")) {
-            loadFragment(new UploadPhotoFragment());
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if(check!=null && check.equals("true") && currentUser!=null) {
+            if (currentUser.getDisplayName().isEmpty())
+                Toast.makeText(getContext(), "Please Update Your Profile First.", Toast.LENGTH_SHORT).show();
+            else
+                loadFragment(new UploadPhotoFragment());
             navigation.setSelectedItemId(R.id.Add_Photo);
         }
 
@@ -62,7 +67,7 @@ public class MainHomeFragment extends Fragment implements BottomNavigationView.O
             case R.id.Add_Photo:
                 FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 if(currentUser!=null) {
-                    if (currentUser.getDisplayName().equals(""))
+                    if (currentUser.getDisplayName()!=null && currentUser.getDisplayName().isEmpty())
                         Toast.makeText(getContext(), "Please Update Your Profile First.", Toast.LENGTH_SHORT).show();
                     else
                         loadFragment(new UploadPhotoFragment());

@@ -55,16 +55,19 @@ public class LOGIN_ACTIVITY extends AppCompatActivity {
                 String password = textPassword.getText().toString().trim();
                 if (email.isEmpty()) {
                     textEmail.setError("Email is Required.");
+                    textEmail.requestFocus();
                     return;
                 }
 
                 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                     textEmail.setError("Please Enter The Valid Email.");
+                    textEmail.requestFocus();
                     return;
                 }
 
                 if (password.isEmpty() || password.length() < 6) {
                     textPassword.setError("At least 6 Character Password is Required.");
+                    textPassword.requestFocus();
                     return;
                 }
 

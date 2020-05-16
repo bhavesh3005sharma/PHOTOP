@@ -3,7 +3,7 @@
     package="com.example.bestphotocollections">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,8 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".ConformationActivity"></activity>
+        <activity
+            android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
             android:configChanges="keyboard|orientation|screenSize"
@@ -26,9 +28,6 @@
             android:name=".MessagingActivities.ChatActivity.ChatActivity"
             android:configChanges="keyboard|orientation|screenSize" />
         <activity android:name=".showSelectedImg" />
-        <activity
-            android:name=".AddPhoto_Activity"
-            android:configChanges="keyboard|orientation|screenSize" />
         <activity
             android:name=".AuthenticaionActivities.RESET_PASSWORD"
             android:theme="@style/AppTheme.NoActionBar" />

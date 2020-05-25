@@ -28,26 +28,17 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class DirectMessageActivity extends AppCompatActivity implements Contract.View {
+public class DirectMessageActivity extends AppCompatActivity implements Contract.View , View.OnClickListener {
     String oppositePersonUid , name , profilePicUri;
-    @BindView(R.id.recyclerViewChats)
-    RecyclerView recyclerView;
-    @BindView(R.id.editTextMessage)
-    EditText textMessage;
-    @BindView(R.id.send)
-    ImageView send;
-    @BindView(R.id.progressBarChatsActivity)
-    ProgressBar progressBar;
-    @BindView(R.id.name)
-    TextView toolbarName;
-    @BindView(R.id.profileImage)
-    CircularImageView toolbarProfileImage;
-    @BindView(R.id.myProfilePic)
-    CircularImageView myProfilePic;
-    @BindView(R.id.oppositeProfilePic)
-    CircularImageView oppositeProfilePic;
-    @BindView(R.id.welcomeConstraintLayout)
-    ConstraintLayout welcomeConstraintLayout;
+    @BindView(R.id.recyclerViewChats) RecyclerView recyclerView;
+    @BindView(R.id.editTextMessage) EditText textMessage;
+    @BindView(R.id.send) ImageView send;
+    @BindView(R.id.progressBarChatsActivity) ProgressBar progressBar;
+    @BindView(R.id.name) TextView toolbarName;
+    @BindView(R.id.profileImage) CircularImageView toolbarProfileImage;
+    @BindView(R.id.myProfilePic) CircularImageView myProfilePic;
+    @BindView(R.id.oppositeProfilePic) CircularImageView oppositeProfilePic;
+    @BindView(R.id.welcomeConstraintLayout) ConstraintLayout welcomeConstraintLayout;
     Contract.Presenter presenter;
     AdapterChatMessages adapter;
     ArrayList<ModelChatMessages> MessagesList;
@@ -62,7 +53,6 @@ public class DirectMessageActivity extends AppCompatActivity implements Contract
         toolbarName.setText(name);
         if(profilePicUri!=null)
         Picasso.get().load(Uri.parse(profilePicUri)).placeholder(R.drawable.ic_profile).into(toolbarProfileImage);
-        Log.d("ahdvhcjsd",oppositePersonUid+name+profilePicUri);
         presenter.loadMessages(oppositePersonUid,name,profilePicUri,true);
         progressBar.setVisibility(View.VISIBLE);
     }
@@ -79,19 +69,8 @@ public class DirectMessageActivity extends AppCompatActivity implements Contract
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String message = textMessage.getText().toString().trim();
-                Log.d("datachanged","message*"+message);
-                if(message.isEmpty())
-                    Toast.makeText(DirectMessageActivity.this, "Please Enter Some Message.", Toast.LENGTH_SHORT).show();
-                else
-                    presenter.sendMessage(message,oppositePersonUid);
-                textMessage.setText(null);
-            }
-        });
+        send.setOnClickListener(this);
+        welcomeConstraintLayout.setOnClickListener(this);
     }
 
     @Override
@@ -124,5 +103,24 @@ public class DirectMessageActivity extends AppCompatActivity implements Contract
         if (FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()!=null)
             Picasso.get().load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl()).placeholder(R.drawable.ic_profile).into(myProfilePic);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch ((v.getId())){
+            case R.id.send:
+                String message = textMessage.getText().toString().trim();
+                if(message.isEmpty())
+                    Toast.makeText(DirectMessageActivity.this, "Please Enter Some Message.", Toast.LENGTH_SHORT).show();
+                else
+                    presenter.sendMessage(message,oppositePersonUid);
+                textMessage.setText(null);
+                break;
+            case R.id.welcomeConstraintLayout:
+                String msg = "✋✋ Hi ";
+                presenter.sendMessage(msg,oppositePersonUid);
+                welcomeConstraintLayout.setVisibility(View.GONE);
+                break;
+        }
     }
 }

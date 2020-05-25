@@ -1,15 +1,25 @@
 package com.example.bestphotocollections.Model;
 
 public  class ModelConnection {
-    String uri,title,metadata,name,profileImageUri,uid;
-    boolean isLoaded=false;
+    String uri,title,metadata,name,profileImageUri,uid,Key;
+    boolean isLiked=false;
 
-    public boolean isLoaded() {
-        return isLoaded;
+
+
+    public String getKey() {
+        return Key;
     }
 
-    public void setLoaded(boolean loaded) {
-        isLoaded = loaded;
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public void setKey(String key) {
+        Key = key;
     }
 
     public String getUid() {

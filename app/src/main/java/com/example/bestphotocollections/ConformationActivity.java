@@ -18,8 +18,6 @@ public class ConformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_conformation);
 
         Intent intent = getIntent();
-
-
         try {
             JSONObject jsonDetails = new JSONObject(intent.getStringExtra("PaymentDetails"));
 

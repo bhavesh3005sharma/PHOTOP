@@ -3,7 +3,8 @@
     package="com.example.bestphotocollections">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <uses-feature android:name="android.hardware.camera" />
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -16,11 +17,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConformationActivity"></activity>
+        <activity
+            android:name=".Profile.Activities.ShowProfile.ShowProfileActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".ConformationActivity" />
+        <activity
+            android:name=".Profile.Activities.EditProfileActivity.EditProfileActivity"
+            android:configChanges="keyboard|orientation|screenSize"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AuthenticaionActivities.LOGIN_ACTIVITY"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MessagingActivities.DirectMessage.DirectMessageActivity"
             android:configChanges="keyboard|orientation|screenSize"
@@ -31,18 +41,22 @@
         <activity android:name=".showSelectedImg" />
         <activity
             android:name=".AuthenticaionActivities.RESET_PASSWORD"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
-            android:configChanges="keyboard|orientation|screenSize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AuthenticaionActivities.SIGNUP_ACTIVITY"
-            android:screenOrientation="fullSensor"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".SplashScreen"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action

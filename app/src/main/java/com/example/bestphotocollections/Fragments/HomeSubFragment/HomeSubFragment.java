@@ -26,7 +26,7 @@ public class HomeSubFragment extends Fragment implements Contract.view,MainHomeF
 
     RecyclerView recyclerView;
     ProgressBar progressBar;
-    ItemGroupAdapter adapter;
+    public static ItemGroupAdapter adapter;
     Contract.Presenter presenter;
 
     @Override
@@ -39,7 +39,6 @@ public class HomeSubFragment extends Fragment implements Contract.view,MainHomeF
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_sub_fragment,container,false);
-        getActivity().setTitle("PHOTOP");
         recyclerView =  view.findViewById(R.id.recycler_view_group);
         MainHomeFragment mainHomeFragment = new MainHomeFragment();
         mainHomeFragment.setOnItemClickListener(HomeSubFragment.this);
@@ -77,18 +76,7 @@ public class HomeSubFragment extends Fragment implements Contract.view,MainHomeF
 
     @Override
     public void searchHome(SearchView searchView) {
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                adapter.getFilter().filter(newText);
-                return true;
-            }
-        });
     }
 
 }

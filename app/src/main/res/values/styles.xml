@@ -1,4 +1,5 @@
 <resources>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <item name="colorPrimary">#193AEE</item>
@@ -12,7 +13,10 @@
     </style>
 
     <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Light">
-        @import url(\'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&amp;display=swap');
-    </style>
+        @import url(\'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500&amp;display=swap');</style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

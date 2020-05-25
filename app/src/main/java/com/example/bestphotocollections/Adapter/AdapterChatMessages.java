@@ -56,7 +56,6 @@ public class AdapterChatMessages extends RecyclerView.Adapter {
         if(chatMessages.isMyMessage()){
             ((viewHolderSentMsgs)holder).messageBody.setText(chatMessages.getMessages());
             ((viewHolderSentMsgs)holder).time.setText(chatMessages.getTime());
-            Log.d("checkingPurpose",chatMessages.getMessages()+"*"+chatMessages.isDelivered()+"*"+chatMessages.getTime());
             if (chatMessages.isDelivered()) {
                 ((viewHolderSentMsgs) holder).msgStatus.setVisibility(View.GONE);
             }

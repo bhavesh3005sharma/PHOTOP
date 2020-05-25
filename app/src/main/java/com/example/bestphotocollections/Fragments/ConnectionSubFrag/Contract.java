@@ -11,11 +11,13 @@ public class Contract {
 
         void setRecyclerView(ArrayList<ModelConnection> list);
 
-        void NotifyAdapter();
+        void NotifyAdapter(ArrayList<ModelConnection> list);
     }
 
     interface Presenter{
 
         void loadDataFromConnections();
+
+        void setPicLiked(String uid, String key);
     }
 }

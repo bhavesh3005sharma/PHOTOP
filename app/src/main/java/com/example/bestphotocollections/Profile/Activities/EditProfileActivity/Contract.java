@@ -1,4 +1,4 @@
-package com.example.bestphotocollections.Fragments.ProfileFragment;
+package com.example.bestphotocollections.Profile.Activities.EditProfileActivity;
 
 import android.net.Uri;
 
@@ -11,7 +11,7 @@ public class Contract {
 
         String getFileExtension(Uri mImageUri);
 
-        void setProfileData(long followers, long followings, long total_uploads, String metadata);
+        void setProfileData(String metadata);
     }
     public interface presenter{
 

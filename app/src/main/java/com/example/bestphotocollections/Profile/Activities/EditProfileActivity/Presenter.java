@@ -1,4 +1,4 @@
-package com.example.bestphotocollections.Fragments.ProfileFragment;
+package com.example.bestphotocollections.Profile.Activities.EditProfileActivity;
 
 import android.net.Uri;
 import android.util.Log;
@@ -65,11 +65,8 @@ public class Presenter implements Contract.presenter{
         mDatabaseRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                long followers = dataSnapshot.child("Followers").getChildrenCount();
-                long followings = dataSnapshot.child("Followings").getChildrenCount();
-                long total_uploads = dataSnapshot.child("item_list").getChildrenCount();
                 String metadata = ""+dataSnapshot.child("Metadata").getValue();
-                mainView.setProfileData(followers,followings,total_uploads,metadata);
+                mainView.setProfileData(metadata);
             }
 
             @Override

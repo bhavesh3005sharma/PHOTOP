@@ -95,6 +95,19 @@ public class MainHomeFragment extends Fragment implements BottomNavigationView.O
 
         SearchView searchView = (SearchView) search.getActionView();
         searchView.setQueryHint("Search Here!");
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                HomeSubFragment.adapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+
         if(mListener!=null) {
             mListener.searchHome(searchView);
         }

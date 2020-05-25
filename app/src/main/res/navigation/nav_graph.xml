@@ -17,6 +17,6 @@
         android:label="UPLOADS" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.bestphotocollections.Fragments.ProfileFragment.ProfileFragment"
+        android:name="com.example.bestphotocollections.Profile.Activities.EditProfileActivity.EditProfileActivity"
         android:label="PROFILE" />
 </navigation>

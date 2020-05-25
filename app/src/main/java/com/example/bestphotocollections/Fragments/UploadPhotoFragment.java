@@ -138,6 +138,7 @@ public class UploadPhotoFragment extends Fragment implements View.OnClickListene
                                     String uploadId = mDatabaseRef.push().getKey();
 
                                     mDatabaseRef.child("item_list/"+uploadId).setValue(upload);
+                                    if (FirebaseAuth.getInstance().getCurrentUser()!=null)
                                     mDatabaseRef.child("Name").setValue(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
                                 }
                             });

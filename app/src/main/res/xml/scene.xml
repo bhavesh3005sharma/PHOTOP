@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+    <Transition
+        motion:constraintSetStart="@layout/show_profile_activity_start"
+        motion:constraintSetEnd="@layout/show_profile_activity_end">
+        <OnSwipe
+            motion:onTouchUp="stop"
+            motion:touchAnchorId="@+id/constraintLayoutDetails"
+            motion:dragDirection="dragUp" />
+    </Transition>
+</MotionScene>
+    <!--            motion:moveWhenScrollAtTop="true"-->

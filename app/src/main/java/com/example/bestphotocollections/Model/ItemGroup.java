@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class ItemGroup {
     private String Name;
-    int btnFollowCondition;
     private String uid;
     private ArrayList<ItemData> item_list;
     String Uri;
@@ -24,14 +23,6 @@ public class ItemGroup {
 
     public void setMetadata(String metadata) {
         Metadata = metadata;
-    }
-
-    public int getBtnFollowCondition() {
-        return btnFollowCondition;
-    }
-
-    public void setBtnFollowCondition(int btnFollowCondition) {
-        this.btnFollowCondition = btnFollowCondition;
     }
 
     public String getUid() {

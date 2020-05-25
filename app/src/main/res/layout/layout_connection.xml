@@ -68,13 +68,15 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_like" />
+            android:background="#FDFBFB"
+            android:src="@drawable/ic_liked" />
 
         <ImageButton
             android:id="@+id/download"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="#FDFBFB"
             android:src="@drawable/ic_download" />
 
         <ImageButton
@@ -82,6 +84,7 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:background="#FDFBFB"
             android:padding="5dp"
             android:src="@drawable/ic_send" />
 

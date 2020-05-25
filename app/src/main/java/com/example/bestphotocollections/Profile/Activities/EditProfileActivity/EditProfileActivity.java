@@ -1,21 +1,18 @@
-package com.example.bestphotocollections.Fragments.ProfileFragment;
+package com.example.bestphotocollections.Profile.Activities.EditProfileActivity;
 
 import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,71 +21,46 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.example.bestphotocollections.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ProfileFragment extends Fragment implements Contract.view, View.OnClickListener {
+public class EditProfileActivity extends AppCompatActivity implements Contract.view, View.OnClickListener {
 
-    @BindView(R.id.textView_uploads)
-    TextView textUploads;
-    @BindView(R.id.textView_followers)
-    TextView textFollowers;
-    @BindView(R.id.textView_following)
-     TextView textFollowings;
-    @BindView(R.id.profile_image)
-     ImageView profileImage;
-    @BindView(R.id.text_name)
-     EditText editTextName;
-    @BindView(R.id.text_email)
-     TextView textEmail;
-    @BindView(R.id.text_password)
-     TextView textPassword;
-    @BindView(R.id.text_bio)
-     EditText editTextBio;
-    @BindView(R.id.btn_save)
-     Button btn_save;
-    @BindView(R.id.progressBar)
-    ProgressBar progressBar;
-    TextView gallery;
-    TextView camera;
-    TextView cancel;
+    @BindView(R.id.profile_image) ImageView profileImage;
+    @BindView(R.id.text_name) EditText editTextName;
+    @BindView(R.id.text_email) TextView textEmail;
+    @BindView(R.id.text_password) TextView textPassword;
+    @BindView(R.id.text_bio) EditText editTextBio;
+    @BindView(R.id.btn_save) Button btn_save;
+    @BindView(R.id.progressBar)ProgressBar progressBar;
+    TextView gallery,camera,cancel;
     AlertDialog alertDialog;
-     Contract.presenter presenter;
+    Contract.presenter presenter;
     Uri imageUri;
-    SharedPreferences sharedPreferences;
-     FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.profile_fragment,container,false);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        getActivity().setTitle("Profile");
-        sharedPreferences = getActivity().getSharedPreferences("shared_pref_profile_data",Context.MODE_PRIVATE);
+        setContentView(R.layout.activity_edit_profile);
+        setTitle("Edit Profile");
+        ButterKnife.bind(this);
+        presenter = new Presenter(EditProfileActivity.this);
 
-        ButterKnife.bind(this,view);
-        presenter = new Presenter(ProfileFragment.this);
-
-        loadDataFormSharedPref();
         editTextName.setText(currentUser.getDisplayName());
         textEmail.setText(currentUser.getEmail());
         if(currentUser.getPhotoUrl()!=null)
@@ -96,8 +68,6 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
         presenter.loadDataOfUser();
         btn_save.setOnClickListener(this);
         profileImage.setOnClickListener(this);
-
-        return view;
     }
 
     @Override
@@ -107,22 +77,7 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
                 presenter.setProfileName(editTextName.getText().toString().trim(),editTextBio.getText().toString().trim());
                 break;
             case R.id.profile_image:
-                Log.d("profile","CLicked");
-                if(ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                { requestPermissions(
-                            new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                            2000);
-                    Log.d("profilePermission","taken");
-                }
-                else if (ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                {   requestPermissions(
-                        new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
-                        2000);
-                    Toast.makeText(getContext(), "Give Permissions and try again.", Toast.LENGTH_SHORT).show();
-                }
-                else
+                if(checkForReadPermission() && checkForWritePermission())
                     openAlertDialogue();
                 break;
             case R.id.gallery:
@@ -134,13 +89,42 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
             case R.id.camera:
                 alertDialog.dismiss();
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (takePictureIntent.resolveActivity(getActivity().getPackageManager()) != null)
+                if (takePictureIntent.resolveActivity(EditProfileActivity.this.getPackageManager()) != null)
                     startActivityForResult(takePictureIntent, 2);
                 break;
             case R.id.cancel:
                 alertDialog.dismiss();
                 break;
         }
+    }
+
+    private boolean checkForWritePermission() {
+        if (Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(EditProfileActivity.this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        {   requestPermissions(
+                new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                2000);
+            Toast.makeText(EditProfileActivity.this, "Give Permissions and try again.", Toast.LENGTH_SHORT).show();
+            //Permission automatically granted for Api<23 on installation
+        }
+        else
+            return true;
+
+        return false;
+    }
+
+    private boolean checkForReadPermission() {
+        if(Build.VERSION.SDK_INT >= 23 && ActivityCompat.checkSelfPermission(EditProfileActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+        { requestPermissions(
+                new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                2000);
+            //Permission automatically granted for Api<23 on installation
+        }
+        else
+            return true;
+
+        return false;
     }
 
 
@@ -151,27 +135,26 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
 
     @Override
     public void Toast(String s) {
-        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+        Toast.makeText(EditProfileActivity.this, s, Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         alertDialog.dismiss();
-        Log.d("ActivityResult","run");
-        if (resultCode == getActivity().RESULT_OK && data != null) {
-            if(requestCode == 1 && data.getData()!=null) {
+        if (resultCode == RESULT_OK && data != null) {
+            if (requestCode == 1 && data.getData() != null) {
                 imageUri = data.getData();
                 Picasso.get().load(imageUri).placeholder(R.drawable.ic_profile).into(profileImage);
                 openAlertDialogueToShowPic();
-            }else if(requestCode == 2 && data.getExtras()!=null){
+            } else if (requestCode == 2 && data.getExtras() != null) {
                 Bundle extras = data.getExtras();
                 Bitmap imageBitmap = (Bitmap) extras.get("data");
-                Log.d("***imageBitmap",imageBitmap+"");
-                imageUri = getImageUri(getContext(),imageBitmap);
+                Log.d("***imageBitmap", imageBitmap + "");
+                imageUri = getImageUri(EditProfileActivity.this, imageBitmap);
                 openAlertDialogueToShowPic();
                 profileImage.setImageBitmap(imageBitmap);
             }
-            Log.d("imageUri",""+imageUri);
         }
     }
 
@@ -183,14 +166,14 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    protected void onDestroy() {
+        super.onDestroy();
         if (alertDialog!=null)
-        alertDialog.dismiss();
+            alertDialog.dismiss();
     }
 
     private void openAlertDialogueToShowPic() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.layout_show_profile_image,null));
 
@@ -217,7 +200,7 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
     }
 
     private void openAlertDialogue() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(EditProfileActivity.this);
         LayoutInflater inflater = this.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.dialogue_choose,null));
         alertDialog = builder.create();
@@ -234,18 +217,14 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
 
     @Override
     public String getFileExtension(Uri uri) {
-        ContentResolver cR = getActivity().getContentResolver();
+        ContentResolver cR = EditProfileActivity.this.getContentResolver();
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
     }
 
 
     @Override
-    public void setProfileData(long followers, long followings, long total_uploads, String metadata) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        textFollowers.setText(""+followers);
-        textFollowings.setText(""+followings);
-        textUploads.setText(""+total_uploads);
+    public void setProfileData(String metadata) {
         if(metadata.equals("null")) {
             metadata = "Add some bio about you. It will help your friends to recognise you.";
             editTextBio.setHint(metadata);
@@ -254,41 +233,13 @@ public class ProfileFragment extends Fragment implements Contract.view, View.OnC
         else {
             Log.d("else-setprfleData-text",metadata);
             editTextBio.setText(metadata);
-            editor.putString("metadata",metadata);
-        }
-        editor.putLong("followers",followers);
-        editor.putLong("followings",followings);
-        editor.putLong("total_uploads",total_uploads);
-
-        if(currentUser.getPhotoUrl()!=null)
-            editor.putString("uri",currentUser.getPhotoUrl().toString());
-        editor.apply();
-    }
-
-    private void loadDataFormSharedPref() {
-        textFollowers.setText(""+sharedPreferences.getLong("followers",0));
-        textFollowings.setText(""+sharedPreferences.getLong("followings",0));
-        textUploads.setText(""+sharedPreferences.getLong("total_uploads",0));
-        if(sharedPreferences.getString("uri",null)!=null)
-            Picasso.get().load(sharedPreferences.getString("uri",null)).placeholder(R.drawable.ic_profile).into(profileImage);
-        String metadata = sharedPreferences.getString("metadata",null);
-        if(metadata==null) {
-            metadata = "Add some bio about you. It will help your friends to recognise you.";
-            editTextBio.setHint(metadata);
-            Log.d("if-hint",metadata);
-        }
-        else {
-            Log.d("else-text",metadata);
-            editTextBio.setText(metadata);
         }
     }
 
     private Uri getImageUri(Context context, Bitmap inImage) {
-        Log.d("imImage",""+inImage);
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
         String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
-        Log.d("path",""+path);
         return Uri.parse(path);
     }
 }
